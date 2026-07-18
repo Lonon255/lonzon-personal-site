@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lonzon</title>
+    <meta
+      name="description"
+      content="一个把 AI、内容工作流和项目判断整理成清楚入口的个人网站。"
+    />
+    <meta property="og:title" content="Lonzon" />
+    <meta
+      property="og:description"
+      content="把 AI、内容和项目判断整理成一个清楚的入口。"
+    />
+    <meta property="og:image" content="assets/og.png" />
+    <link rel="icon" href="favicon.svg" />
+    <style>
+      :root {
+        --background: #f4efe5;
+        --foreground: #171512;
+        --muted: #68615a;
+        --line: rgba(23, 21, 18, 0.14);
+        --paper: rgba(255, 252, 245, 0.84);
+        --ink: #171512;
+        --blue: #276c9f;
+        --green: #6f8067;
+        --amber: #c98522;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(90deg, rgba(23, 21, 18, 0.045) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(23, 21, 18, 0.04) 1px, transparent 1px),
+          var(--background);
+        background-size: 48px 48px;
+        color: var(--foreground);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+        align-items: center;
+        min-height: 92vh;
+        padding: 48px clamp(20px, 5vw, 72px) 28px;
+        position: relative;
+      }
+
+      .hero::after {
+        background: var(--line);
+        bottom: 0;
+        content: "";
+        height: 1px;
+        left: 0;
+        position: absolute;
+        right: 0;
+      }
+
+      .hero-copy {
+        max-width: 780px;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        color: var(--blue);
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0;
+        margin: 0 0 18px;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        font-size: clamp(48px, 7vw, 112px);
+        font-weight: 760;
+        letter-spacing: 0;
+        line-height: 0.94;
+        margin-bottom: 28px;
+        max-width: 920px;
+      }
+
+      h2 {
+        font-size: clamp(32px, 4.5vw, 72px);
+        font-weight: 720;
+        line-height: 1;
+        letter-spacing: 0;
+        margin-bottom: 18px;
+      }
+
+      h3 {
+        font-size: clamp(22px, 2vw, 32px);
+        font-weight: 700;
+        line-height: 1.08;
+        margin-bottom: 18px;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 1.7;
+        max-width: 680px;
+        margin-bottom: 34px;
+      }
+
+      .hero-pills,
+      .hero-actions,
+      .link-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 252, 245, 0.62);
+        color: #38332d;
+        font-size: 14px;
+        line-height: 1;
+        padding: 11px 14px;
+      }
+
+      .hero-actions {
+        margin-top: 30px;
+      }
+
+      .button,
+      .link-chip {
+        align-items: center;
+        border-radius: 999px;
+        display: inline-flex;
+        font-weight: 650;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 20px;
+        transition:
+          transform 180ms ease,
+          background 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .button:hover,
+      .link-chip:hover {
+        transform: translateY(-2px);
+      }
+
+      .button-primary {
+        background: var(--ink);
+        color: #fffaf0;
+      }
+
+      .button-secondary,
+      .link-chip {
+        border: 1px solid var(--line);
+        background: rgba(255, 252, 245, 0.68);
+      }
+
+      .hero-frame {
+        margin-left: auto;
+        position: relative;
+        width: min(54vw, 900px);
+      }
+
+      .hero-image {
+        aspect-ratio: 16 / 9;
+        border-radius: 8px;
+        box-shadow: 0 26px 90px rgba(34, 29, 22, 0.22);
+        height: auto;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .hero-caption {
+        align-items: center;
+        background: rgba(23, 21, 18, 0.86);
+        border-radius: 999px;
+        bottom: 18px;
+        color: #fffaf0;
+        display: flex;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 11px;
+        gap: 14px;
+        left: 18px;
+        letter-spacing: 0;
+        max-width: calc(100% - 36px);
+        padding: 9px 13px;
+        position: absolute;
+        white-space: nowrap;
+      }
+
+      .hero-caption span::before {
+        background: var(--amber);
+        border-radius: 50%;
+        content: "";
+        display: inline-block;
+        height: 6px;
+        margin-right: 7px;
+        width: 6px;
+      }
+
+      .section {
+        padding: clamp(64px, 10vw, 128px) clamp(20px, 5vw, 72px);
+      }
+
+      .section-grid {
+        display: grid;
+        gap: 44px;
+      }
+
+      .section-heading {
+        max-width: 860px;
+      }
+
+      .section-heading.narrow {
+        max-width: 600px;
+      }
+
+      .support,
+      .project-card p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .project-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .project-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-height: 280px;
+        padding: clamp(22px, 3vw, 34px);
+      }
+
+      .project-meta {
+        color: var(--green) !important;
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 12px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 46px;
+      }
+
+      .split {
+        align-items: start;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: clamp(36px, 7vw, 100px);
+        grid-template-columns: minmax(0, 0.85fr) minmax(320px, 1.15fr);
+      }
+
+      .notes-panel {
+        border-top: 1px solid var(--ink);
+      }
+
+      .note-row {
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 22px;
+        grid-template-columns: 64px 1fr;
+        min-height: 94px;
+      }
+
+      .note-row p {
+        font-size: clamp(20px, 2.2vw, 34px);
+        font-weight: 650;
+        line-height: 1.16;
+        margin: 0;
+      }
+
+      .note-index {
+        color: var(--amber);
+        font-family:
+          "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+      }
+
+      .contact {
+        align-items: end;
+        background: #171512;
+        color: #fffaf0;
+        display: grid;
+        gap: 34px;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .contact .eyebrow {
+        color: #87b4d3;
+      }
+
+      .contact h2 {
+        max-width: 860px;
+      }
+
+      .link-chip {
+        background: transparent;
+        border-color: rgba(255, 250, 240, 0.28);
+        color: #fffaf0;
+      }
+
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+          padding-top: 34px;
+        }
+
+        .hero-frame {
+          margin: 48px 0 0;
+          width: 100%;
+        }
+
+        .project-grid,
+        .split,
+        .contact {
+          grid-template-columns: 1fr;
+        }
+
+        .contact {
+          align-items: start;
+        }
+      }
+
+      @media (max-width: 620px) {
+        h1 {
+          font-size: clamp(42px, 15vw, 72px);
+        }
+
+        .lead {
+          font-size: 17px;
+        }
+
+        .hero-caption {
+          align-items: flex-start;
+          border-radius: 8px;
+          flex-direction: column;
+          gap: 7px;
+          white-space: normal;
+        }
+
+        .project-card {
+          min-height: 220px;
+        }
+
+        .note-row {
+          grid-template-columns: 44px 1fr;
+          min-height: 86px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Lonzon / personal site</p>
+          <h1>把 AI、内容和项目判断，整理成一个清楚的入口。</h1>
+          <p class="lead">
+            这不是仓库式知识库，而是一个能让别人 30 秒看懂你在做什么、
+            做得怎样、下一步去哪里找你的主页。
+          </p>
+
+          <div class="hero-pills" aria-label="site highlights">
+            <span class="pill">把复杂信息翻成人话</span>
+            <span class="pill">先看证据，再看结构</span>
+            <span class="pill">做能持续更新的个人主页</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">看项目</a>
+            <a class="button button-secondary" href="#contact">联系我</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-frame">
+            <img
+              src="assets/hero-workspace.png"
+              alt=""
+              class="hero-image"
+              loading="eager"
+            />
+            <div class="hero-caption">
+              <span>workspace</span>
+              <span>research notes</span>
+              <span>content systems</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-grid" id="projects">
+        <div class="section-heading">
+          <p class="eyebrow">What I do</p>
+          <h2>三个常驻方向</h2>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <p class="project-meta">真实体验 · 避坑清单</p>
+            <h3>AI 工具实测</h3>
+            <p>把噪音大的产品拆成结论、边界和适合谁用。</p>
+          </article>
+          <article class="project-card">
+            <p class="project-meta">方法论 · 生产链路</p>
+            <h3>内容工作流</h3>
+            <p>从选题、碎片盘到发布前审稿，整理成可复用流程。</p>
+          </article>
+          <article class="project-card">
+            <p class="project-meta">版式 · 资产沉淀</p>
+            <h3>视觉模板</h3>
+            <p>公众号、小红书、个人网站都保持统一的表达和审美。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split">
+        <div class="section-heading narrow">
+          <p class="eyebrow">Why it works</p>
+          <h2>首页只做三件事</h2>
+          <p class="support">
+            让人知道你是谁，看到你做过什么，最后知道应该点哪里。
+          </p>
+        </div>
+
+        <div class="notes-panel">
+          <div class="note-row">
+            <span class="note-index">01</span>
+            <p>一句话定位，别让访客自己猜。</p>
+          </div>
+          <div class="note-row">
+            <span class="note-index">02</span>
+            <p>项目和内容分组，避免信息打架。</p>
+          </div>
+          <div class="note-row">
+            <span class="note-index">03</span>
+            <p>保留一个明确的联系入口。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact">
+        <div>
+          <p class="eyebrow">Find me here</p>
+          <h2>把外部入口放在最容易找的地方。</h2>
+        </div>
+
+        <div class="link-row">
+          <a href="#" class="link-chip">YouTube</a>
+          <a href="#" class="link-chip">Bilibili</a>
+          <a href="#" class="link-chip">公众号</a>
+          <a href="#" class="link-chip">知识库</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
