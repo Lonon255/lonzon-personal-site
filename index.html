@@ -471,6 +471,86 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
+      .layer-grid {
+        display: grid;
+        gap: 1px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+
+      .layer-card {
+        background: var(--white);
+        min-height: 280px;
+        padding: clamp(22px, 3vw, 34px);
+      }
+
+      .layer-card strong,
+      .step strong,
+      .template-card strong {
+        display: block;
+        font-size: 13px;
+        font-family:
+          "SFMono-Regular",
+          Consolas,
+          "Liberation Mono",
+          monospace;
+        color: var(--blue);
+        margin-bottom: 46px;
+      }
+
+      .layer-card p,
+      .step p,
+      .template-card p {
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.72;
+        margin-bottom: 0;
+      }
+
+      .pipeline {
+        background: #eaf1ea;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .steps {
+        display: grid;
+        gap: 0;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        border: 1px solid var(--line);
+      }
+
+      .step {
+        background: rgba(255, 250, 240, 0.66);
+        border-right: 1px solid var(--line);
+        min-height: 250px;
+        padding: 24px;
+      }
+
+      .step:last-child {
+        border-right: 0;
+      }
+
+      .template-shelf {
+        background: #fff7eb;
+        border-top: 1px solid var(--line);
+      }
+
+      .template-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .template-card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-height: 270px;
+        padding: clamp(22px, 3vw, 32px);
+      }
+
       .log-card {
         border-top: 2px solid var(--ink);
         min-height: 230px;
@@ -610,8 +690,14 @@
         }
 
         .routes,
-        .log-grid {
+        .log-grid,
+        .layer-grid,
+        .template-grid {
           grid-template-columns: 1fr 1fr;
+        }
+
+        .steps {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
         .work-row {
@@ -642,8 +728,21 @@
         }
 
         .routes,
-        .log-grid {
+        .log-grid,
+        .layer-grid,
+        .template-grid,
+        .steps {
           grid-template-columns: 1fr;
+        }
+
+        .step {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          min-height: 210px;
+        }
+
+        .step:last-child {
+          border-bottom: 0;
         }
 
         .route {
@@ -705,15 +804,15 @@
         <aside class="hero-board" aria-label="知识库工作台预览">
           <img class="board-image" src="assets/hero-workspace.png" alt="知识库和工作流草图桌面" />
           <div class="board-overlay">
-            <p class="eyebrow"><span class="dot"></span> public workspace preview</p>
+            <p class="eyebrow"><span class="dot"></span> workspace preview</p>
           </div>
           <div class="terminal mono">
-            <div class="status-line">site is live</div>
+            <div class="status-line">公开工作台预览</div>
             <p>
-              /knowledge-base <strong>mapped</strong><br />
-              /content-workflow <strong>online</strong><br />
-              /templates <strong>ready</strong><br />
-              /project-memory <strong>synced</strong>
+              知识库地图 · <strong>长期知识</strong><br />
+              内容工作流 · <strong>选题到审稿</strong><br />
+              模板资产架 · <strong>卡片与封面</strong><br />
+              项目记忆页 · <strong>跨端接力</strong>
             </p>
           </div>
         </aside>
@@ -774,6 +873,41 @@
         </div>
       </section>
 
+      <section class="shell">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span class="dot"></span> knowledge map</p>
+            <h2>知识库怎么长出来。</h2>
+          </div>
+          <p>
+            我把知识库拆成四层：先保留原始证据，再沉淀长期知识，中间的报告和草稿留在产出区，成熟模板单独放到资产架。
+          </p>
+        </div>
+
+        <div class="layer-grid">
+          <article class="layer-card">
+            <strong>01 / 原始材料</strong>
+            <h3>先接住信息</h3>
+            <p>链接、截图、样本、PDF、聊天摘录先进入原始层，保留来源和上下文，不急着包装成结论。</p>
+          </article>
+          <article class="layer-card">
+            <strong>02 / 长期知识</strong>
+            <h3>再整理成页</h3>
+            <p>经过复盘和确认的规则、概念、项目经验，才会进入长期知识页，方便以后继续调用。</p>
+          </article>
+          <article class="layer-card">
+            <strong>03 / 阶段产出</strong>
+            <h3>报告和草稿留痕</h3>
+            <p>研究报告、内容草稿、模板试验和阶段复盘都保留版本，能回看当时为什么这样判断。</p>
+          </article>
+          <article class="layer-card">
+            <strong>04 / 模板资产</strong>
+            <h3>可复用的留下</h3>
+            <p>验证过的卡片、封面、PPT 交付方式和脚本，会沉淀成下一次可以直接使用的资产。</p>
+          </article>
+        </div>
+      </section>
+
       <section class="work" id="workflows">
         <div class="shell">
           <div class="section-head">
@@ -789,28 +923,28 @@
           <div class="work-list">
             <div class="work-row">
               <span class="work-index">01</span>
-            <div class="work-copy">
-              <h3>Codex × 小助理协作记忆</h3>
-              <p>把本地 Codex、服务器 Hermes 和 Obsidian vault 串起来，解决跨对话、跨端接力时容易断上下文的问题。</p>
-            </div>
+              <div class="work-copy">
+                <h3>Codex × 小助理协作记忆</h3>
+                <p>把本地 Codex、服务器 Hermes 和 Obsidian vault 串起来，解决跨对话、跨端接力时容易断上下文的问题。</p>
+              </div>
               <span class="work-status">在维护</span>
             </div>
 
             <div class="work-row">
               <span class="work-index">02</span>
-            <div class="work-copy">
-              <h3>内容中台与发布前审稿</h3>
-              <p>让选题、证据、草稿、平台表达和发布复盘分层流动，避免把临时判断写成长期事实。</p>
-            </div>
+              <div class="work-copy">
+                <h3>内容中台与发布前审稿</h3>
+                <p>让选题、证据、草稿、平台表达和发布复盘分层流动，避免把临时判断写成长期事实。</p>
+              </div>
               <span class="work-status">在跑</span>
             </div>
 
             <div class="work-row">
               <span class="work-index">03</span>
-            <div class="work-copy">
-              <h3>公众号与小红书视觉模板</h3>
-              <p>把卡片源文件、渲染脚本、预览图和索引放在一起，后续不靠重新设计，而是从模板继续迭代。</p>
-            </div>
+              <div class="work-copy">
+                <h3>公众号与小红书视觉模板</h3>
+                <p>把卡片源文件、渲染脚本、预览图和索引放在一起，后续不靠重新设计，而是从模板继续迭代。</p>
+              </div>
               <span class="work-status">可复用</span>
             </div>
 
@@ -822,6 +956,53 @@
               </div>
               <span class="work-status">open source ↗</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="pipeline">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow"><span class="dot"></span> content workflow</p>
+              <h2>内容不是直接写，是一步步长出来。</h2>
+            </div>
+            <p>
+              这套流程的重点不是自动发文，而是让每篇内容都有来源、有判断、有平台表达，也有发布前的边界检查。
+            </p>
+          </div>
+
+          <div class="steps">
+            <article class="step">
+              <strong>01</strong>
+              <h3>抓素材</h3>
+              <p>先保存原始链接、截图、文章和案例，不急着提炼观点。</p>
+            </article>
+            <article class="step">
+              <strong>02</strong>
+              <h3>拆碎片</h3>
+              <p>把事实、反应、疑问、风险和可借鉴动作分开。</p>
+            </article>
+            <article class="step">
+              <strong>03</strong>
+              <h3>选结构</h3>
+              <p>结构库只做菜单，不把内容硬塞进固定模板。</p>
+            </article>
+            <article class="step">
+              <strong>04</strong>
+              <h3>写平台版</h3>
+              <p>知乎、公众号、X、小红书分别改写，不共用一种腔调。</p>
+            </article>
+            <article class="step">
+              <strong>05</strong>
+              <h3>发布前审稿</h3>
+              <p>检查事实边界、数量口径、AI 味和高风险表达。</p>
+            </article>
+            <article class="step">
+              <strong>06</strong>
+              <h3>复盘沉淀</h3>
+              <p>真正有价值的经验才回到知识库和模板资产里。</p>
+            </article>
           </div>
         </div>
       </section>
@@ -857,15 +1038,52 @@
         </div>
       </section>
 
+      <section class="template-shelf">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow"><span class="dot"></span> template shelf</p>
+              <h2>已经沉淀的模板资产。</h2>
+            </div>
+            <p>
+              这些不是截图摆设，而是带源文件、渲染脚本、预览图和索引的可复用模板。以后做内容，不需要每次从零开始。
+            </p>
+          </div>
+
+          <div class="template-grid">
+            <article class="template-card">
+              <strong>公众号</strong>
+              <h3>Lonzon 批注判断卡</h3>
+              <p>适合主判断、批注框、风险提醒和轻复盘，重点是让一句判断在手机信息流里站住。</p>
+            </article>
+            <article class="template-card">
+              <strong>公众号</strong>
+              <h3>小豆人信息图卡</h3>
+              <p>适合流程卡、复盘卡和判断卡，用轻手绘元素增强可读性，不抢正文信息。</p>
+            </article>
+            <article class="template-card">
+              <strong>小红书</strong>
+              <h3>三日连载封面</h3>
+              <p>用于系列化首图，保持固定识别，同时给每篇内容留出清楚的钩子位置。</p>
+            </article>
+            <article class="template-card">
+              <strong>小红书</strong>
+              <h3>角色贴图与信息流水线</h3>
+              <p>把角色贴纸、信息层级和封面标题分开管理，后续可以快速适配不同选题。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="proof">
         <div class="shell">
           <div class="section-head">
             <div>
               <p class="eyebrow"><span class="dot"></span> public view</p>
-              <h2>这里放的是公开内容，不是备注。</h2>
+              <h2>公开网站要能点进去看。</h2>
             </div>
             <p>
-              我会把这里当成个人知识库的公开门面：少写抽象介绍，多放入口、记录、方法和成果。
+              现在先把系统地图、工作流和模板资产放出来。后面会继续补真正可访问的知识库页面、案例页和模板预览。
             </p>
           </div>
 
